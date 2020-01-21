@@ -1,4 +1,5 @@
 package com.ruoyi.web.controller.broad;
+import com.ruoyi.broad.domain.Organization;
 import com.ruoyi.broad.domain.Termap;
 import com.ruoyi.broad.service.ITermapService;
 import com.ruoyi.framework.util.ShiroUtils;
@@ -27,8 +28,7 @@ public class TermapController extends BaseController
 	private String prefix = "broad/map";
 
 	@GetMapping("/list")
-	public String list(ModelMap mmap)
-	{
+	public String list(ModelMap mmap,Organization organization){
 		SysUser currentUser = ShiroUtils.getSysUser();//从session中获取当前登陆用户的userid
 		Long userid =  currentUser.getUserId();
 		int returnId = new Long(userid).intValue();
@@ -37,10 +37,10 @@ public class TermapController extends BaseController
 		List<Termap> mapinfoList ;
 		/*判断用户等级，若为超级管理员则可查看全部内容，否则只能查看自己的内容*/
 		if(roleid != 1){
-
-			mapinfoList = mapService.selectMap(aid);//通过所获取的Aid去查询用户所属区域对应的数据
+			organization.setAid(aid);
+			mapinfoList = mapService.selectMap(organization);//通过所获取的Aid去查询用户所属区域对应的数据
 		}else{
-			mapinfoList = mapService.selectMap("");}
+			mapinfoList = mapService.selectMap(organization);}
 		mmap.put("mapinfoList", mapinfoList);
 		return prefix+"/termap";
 	}

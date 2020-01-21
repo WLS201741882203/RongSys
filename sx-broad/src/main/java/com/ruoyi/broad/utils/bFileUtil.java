@@ -1,7 +1,8 @@
 package com.ruoyi.broad.utils;
 
 import com.ruoyi.broad.domain.Program;
-import com.ruoyi.common.utils.DateUtil;
+import it.sauronsoftware.jave.Encoder;
+import it.sauronsoftware.jave.MultimediaInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,40 +43,41 @@ public class bFileUtil {
      * @return 返回相对路径
      */
     public static String saveMusic(MultipartFile file,String saveName) {
-//        String  path = bConst.UPLOAD_PATH + bConst.MP3_FILE_NAME;
-//        logger.info(" --- 音频保存路径：{}, 音频保存名称：{},文件名称：{} --- ", path, saveName,file.getOriginalFilename());
-//        try {
-//            File targetFile = new File(path);
-//            if (!targetFile.exists()) {
-//                targetFile.mkdirs();
-//            }
-//            System.out.println("=======1");
-////            file.transferTo(new File(path, saveName));  //文件保存，写入内存
-//            file.transferTo(new File(path + "/" + saveName));
-//            System.out.println("=======2");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            logger.debug("--- 音频保存异常：{} ---" + e.getMessage());
-//            return null;
-//        }
-//        return saveName;
-
-        //获取文件上传的根目录 C:\Users\wanghao/upload/img
-        String  path = bConst.UPLOAD_PATH + bConst.VIRTUAL_IMG_PATH; //图片存储路径
-        saveName = bCommonUtil.getUuid() + "." + getFileSuffix(file.getOriginalFilename());
-        logger.info(" --- 终端图片保存路径：{}, 终端图片保存名称：{},终端图片名称：{} --- ", path, saveName,file.getOriginalFilename());
+//        String path = bConst.UPLOAD_PATH + bConst.MP3_FILE_NAME;
+        Encoder encoder = new Encoder();
+        long ms = 0;
+        String  path = bConst.UPLOAD_PATH + bConst.MP3_FILE_NAME; //图片存储路径
+        logger.info(" --- 音频保存路径：{}, 音频保存名称：{},文件名称：{} --- ", path, saveName,file.getOriginalFilename());
+        String duration = "";
         try {
             File targetFile = new File(path);
             if (!targetFile.exists()) {
                 targetFile.mkdirs();
             }
-            file.transferTo(new File(path + "/" + saveName));  //文件保存，写入硬盘
+            System.out.println("=======1");
+            File excelFile =  new File(path+"/"+saveName);
+            file.transferTo(excelFile);
+            MultimediaInfo m = encoder.getInfo(excelFile);
+            ms = m.getDuration();
+            int ss = 1000;
+            int mi = ss * 60;
+            int hh = mi * 60;
+            int dd = hh * 24;
+            long day = ms / dd;
+            long hour = (ms - day * dd) / hh;
+            long minute = (ms - day * dd - hour * hh) / mi;
+            long second = (ms - day * dd - hour * hh - minute * mi) / ss;
+            String strHour = hour < 10 ? "0" + hour : "" + hour;//小时
+            String strMinute = minute < 10 ? "0" + minute : "" + minute;//分钟
+            String strSecond = second < 10 ? "0" + second : "" + second;//秒
+            duration = strHour + ":" + strMinute + ":" + strSecond;
+            System.out.println("=======2");
         } catch (Exception e) {
             e.printStackTrace();
             logger.debug("--- 音频保存异常：{} ---" + e.getMessage());
             return null;
         }
-        return "profile/img/virtual/"+saveName;
+        return duration+saveName;
     }
 
     /**
@@ -137,18 +139,13 @@ public class bFileUtil {
             filename = year.substring(2)+filename;
             if (null != file && !file.isEmpty()) {
                 filename =filename+"."+bFileUtil.getFileSuffix(file.getOriginalFilename()); //filename字段
-                if(flenth!="NaN"&&!flenth.equals("")){
-                    g.setFlenth(flenth);
-                }
                 g.setFname(fname);
-                //保存mp3文件
-                String filetype= getFileSuffix(filename);
+                //String filetype= getFileSuffix(filename);
                 String mp3 = null;
-                if("mp3".equals(filetype)){
-                    mp3 = saveMusic(file,filename);//保存mp3文件
-                }else{
-                    mp3 = uplodeDocFile(file);//保存doc文件
-                }
+                mp3 = saveMusic(file,filename);//保存mp3文件
+                System.out.println(mp3);
+                g.setFlenth(mp3.substring(0,8));
+                mp3 = mp3.substring(8,mp3.length());
                 g.setFilename(filename);
                 g.setAddress(bPathUtil.getClasspath() + bConst.FILEPATHPER+mp3);
                 g.setUrls(bConst.FILEPATHPER+mp3);

@@ -4,7 +4,6 @@ import com.ruoyi.common.config.Global;
 import com.ruoyi.common.utils.ExcelUtil;
 import com.ruoyi.common.utils.VideoUtil;
 import com.ruoyi.framework.util.ShiroUtils;
-import com.ruoyi.framework.web.domain.server.Sys;
 import com.ruoyi.system.domain.SysUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -112,11 +111,10 @@ public class PerController extends BaseController {
     public AjaxResult addSave(@RequestParam(value = "files") List<MultipartFile> files,@RequestParam(value = "uname", required = false) String uname) throws IOException {//大小
         String userid =  ShiroUtils.getSysUser().getUserId().toString();
         for(int i=0;i<files.size();i++){
-            String duration = VideoUtil.ReadVideoTimeMs(files.get(i));
+            //String duration = VideoUtil.ReadVideoTimeMs(files.get(i));
             String year = DateUtil.getYear();
             String maxfileid = iProgramService.getMaxFileidofYear(year);
-            Program g = bFileUtil.uplodeFile(maxfileid, files.get(i), files.get(i).getOriginalFilename(),duration, String.valueOf(files.get(i).getSize()), year, userid);
-            System.out.println("-------------"+files.get(i).getOriginalFilename());
+            Program g = bFileUtil.uplodeFile(maxfileid, files.get(i), files.get(i).getOriginalFilename(),"00:00:00", String.valueOf(files.get(i).getSize()), year, userid);
             iProgramService.insertProgram(g);
         };
         return toAjax(1);

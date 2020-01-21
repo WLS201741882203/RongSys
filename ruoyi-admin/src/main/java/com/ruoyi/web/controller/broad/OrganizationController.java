@@ -147,7 +147,7 @@ public class OrganizationController extends BaseController
 		return prefix + "/add";
 	}
 
-
+	@Log(title = "新增终端", businessType = BusinessType.INSERT)
 	@PostMapping("/add")
 	@RequiresPermissions("broad:organization:add")
 	@ResponseBody

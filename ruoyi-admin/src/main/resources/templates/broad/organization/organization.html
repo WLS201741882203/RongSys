@@ -218,7 +218,14 @@
                     field : 'poscene',
                     title : '现场照片',
                     visible: true,
-                    align: 'center'
+                    align: 'center',
+					formatter: function(value, row, index) {
+                    	if(value){
+							return $.table.imageView(ctx+value,50,50);
+						}else {
+                    		return value;
+						}
+					}
                 },
                 {
                     field : 'phone',

@@ -28,7 +28,9 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">电话号码所属人：</label>
                         <div class="col-sm-8">
-                            <input type="text" placeholder="电话号码所属人" class="form-control" id="telpersonphoneedit" name="telperson">
+                            <select class="form-control" id="userinfo" name="userid">
+                                <option value="">--请选择权限人--</option>
+                            </select>
                         </div>
                     </div>
                 </form>
@@ -133,6 +135,17 @@
                 }
             });
         }
+
+        $(function getUserInfo(ele,msg) {
+            $.get("/broad/dto/userinfos",function getmsg(params1,params2) {
+                for (let index = 0; index < params1.length; index++) {
+                    let text = params1[index].uname;
+                    let value = params1[index].userid;
+                    $("#userinfo").append("<option value='"+value+"'>"+text+"</option>")
+                }
+            });
+        })
+
     </script>
 </div>
 </body>

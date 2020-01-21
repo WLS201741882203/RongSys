@@ -319,7 +319,6 @@
         t.note,
         t.atphone,
         t.facid,
-        t.mflowusing,
         t.eovolume,
         t.poscene,
         t.hbtime,
@@ -338,7 +337,22 @@
             <if test="tname != null  and tname != '' "> and t.tname = #{tname}</if>
             <if test="username != null  and username != '' "> and userinfo.uname = #{uname}</if>
             <if test="aname != null  and aname != '' "> and area.aname = #{aname}</if>
-            <if test="lastaccesstime != null  and lastaccesstime != '' "> and t.lastaccesstime = #{lastaccesstime}</if>
+            <if test="lastaccesstime != null  and lastaccesstime != '' ">
+                <choose>
+                    <when test="lastaccesstime == '-1'.toString()">
+                        AND t.lastaccesstime <![CDATA[ > ]]> DATE_SUB(CURDATE(), INTERVAL 1 DAY)
+                    </when>
+                    <when test="lastaccesstime == '0'.toString()">
+                        AND t.lastaccesstime <![CDATA[ < ]]> DATE_SUB(CURDATE(), INTERVAL 1 DAY)
+                    </when>
+                    <when test="lastaccesstime == '1'.toString()">
+                        AND t.lastaccesstime <![CDATA[ > ]]> DATE_SUB(CURDATE(), INTERVAL 2 DAY) and t.lastaccesstime <![CDATA[ < ]]> DATE_SUB(CURDATE(), INTERVAL 0 DAY)
+                    </when>
+                    <when test="lastaccesstime == '2'.toString()">
+                        AND t.lastaccesstime <![CDATA[ > ]]> DATE_SUB(CURDATE(), INTERVAL 3 DAY) and t.lastaccesstime <![CDATA[ < ]]> DATE_SUB(CURDATE(), INTERVAL 1 DAY)
+                    </when>
+                </choose>
+            </if>
             <if test="intertime != null  and intertime != '' "> and t.intertime = #{intertime}</if>
             <if test="terminaltype != null  and terminaltype != '' "> and t.terminaltype = #{terminaltype}</if>
             <if test="longitude != null  and longitude != '' "> and terminal_management.longitude = #{longitude}</if>

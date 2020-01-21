@@ -62,7 +62,7 @@
         </if>
         limit 500
     </select>-->
-    <select id="getAllMapInfo" parameterType="String" resultMap="MapResult">
+    <select id="getAllMapInfo" parameterType="Organization" resultMap="MapResult">
         SELECT DISTINCT tname,m.tid as tid,t.address as address,ui.uname as uname,a.aname,phone,basestation,m.latitude,m.longitude,manageruserid,managername,t.isuse as isuse
         from (((((<include refid="tableName"/> m  JOIN <include refid="terminaltableName"/> t on m.tid=t.tid)
         LEFT JOIN <include refid="areatable"/> a on t.aid= a.aid)
@@ -71,9 +71,17 @@
         left join (SELECT GROUP_CONCAT(tmt.userid) as manageruserid,GROUP_CONCAT(uname) as managername,tid from
         <include refid="managertertable"/> tmt LEFT JOIN <include refid="userinfotable"/> ui on tmt.userid=ui.userid  GROUP BY tid ) manager on m.tid=manager.tid
         where m.latitude != 0.000000
-        <if test="_parameter  != null  and _parameter  != ''  ">
-            and t.aid = #{_parameter}
-        </if>
+        <if test="tid != null  and tid != '' "> and t.tid like '%${tid}%'</if>
+        <if test="tname != null  and tname != '' "> and t.tname like '%${tname}%'</if>
+        <if test="aname != null  and aname != '' "> and ui.aname like '%${aname}%'</if>
+        <if test="phone != null  and phone != '' "> and t.phone like '%${phone}%'</if>
+        <if test="address != null  and address != '' "> and t.address like '%${address}%'</if>
+        <if test="facid != null  and facid != '' "> and t.facid like '%${facid}%'</if>
+        <if test="comstand != null  and comstand != '' "> and t.comstand like '%${comstand}%'</if>
+        <if test="broadtel != broadtel  and broadtel != '' "> and t.broadtel like '%${broadtel}%'</if>
+        <if test="fmfrequency != null  and fmfrequency != '' "> and t.fmfrequency like '%${fmfrequency}%'</if>
+        <if test="manager != null  and manager != '' "> and t.manager like '%${manager}%'</if>
+        <if test="managertel != null  and managertel != '' "> and t.managertel like '%${managertel}%'</if>
         limit 500
     </select>
 

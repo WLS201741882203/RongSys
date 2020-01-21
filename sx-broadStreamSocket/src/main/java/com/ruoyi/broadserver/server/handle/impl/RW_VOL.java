@@ -43,7 +43,7 @@ public class RW_VOL extends DefaultCommand {
 				conditions.setFm(String.valueOf((int)dataresourecs[1]));
 				conditions.setGsm(String.valueOf((int)dataresourecs[2]));
 				conditions.setNullv(String.valueOf((int)dataresourecs[3]));
-				conditions.setUpdatatime(new Date());
+				conditions.setupdatetime(new Date());
 				conditionsService.updateConditions(conditions);
 				return true;
 			}

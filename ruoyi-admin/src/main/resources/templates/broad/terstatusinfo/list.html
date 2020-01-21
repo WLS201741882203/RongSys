@@ -16,9 +16,12 @@
 							<input type="text" name="tname" placeholder="终端编号"/>
 						</li>
 						<li>
-							<select name="status">
-								<option value="true">正常</option>
-								<option value="false">异常</option>
+							<select name="lastaccesstime">
+								<option value=""></option>
+								<option value="-1">正常</option>
+								<option value="0">异常</option>
+								<option value="1">异常1天</option>
+								<option value="2">异常2天</option>
 							</select>
 						</li>
 						<li>
@@ -113,7 +116,7 @@
 						var html = "";
 						var time = parseInt(((new Date()) - (new Date(row.lastaccesstime)))/86400000)
 						if(row.lastaccesstime){
-							if(time > 1 ){
+							if(time >= 1 ){
 								html += "<label style='color: #ff5909'>异常"+time+"天</label>";
 							}else{
 								html += "<label style='color: #ff5909'>正常</label>";

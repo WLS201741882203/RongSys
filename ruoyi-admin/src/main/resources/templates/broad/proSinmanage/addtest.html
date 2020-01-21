@@ -172,6 +172,8 @@
     });
 </script>
 <script th:inline="javascript">
+    var test = window.location.href;
+    var tid=test.substring(test.indexOf("=")+1,test.length);
     $(function queryAreaTree(){
         var url = ctx + "broad/areaGrouping/treeData";
         function zTreeOnCheck(event, treeId, treeNode) {
@@ -214,6 +216,8 @@
         };
 
         $.tree.init(options);
+        var treeObj = $.fn.zTree.getZTreeObj("tree");
+        treeObj.checkNode(treeObj.getNodeByParam("id",tid),true,true)
         $.fn.zTree.init($("#tree1"), options1);
     })
 

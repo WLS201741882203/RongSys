@@ -24,12 +24,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="workvoltage"    column="workvoltage"    />
         <result property="rds"    column="rds"    />
         <result property="fmfrequency"    column="fmfrequency"    />
-        <result property="updatatime"    column="updatatime"    />
+        <result property="updatetime"    column="updatetime"    />
         <result property="lastaccesstime"    column="lastaccesstime"    />
     </resultMap>
 	
 	<sql id="selectConditionsVo">
-        select tid, hversion, sversion, temp, nettype, qsignal, sd, mp3, fm, gsm, nullv, basestation, createtime, remark, transmitpower, reflectedpower, workvoltage, rds, fmfrequency,updatatime,lastaccesstime from ter_conditions
+        select tid, hversion, sversion, temp, nettype, qsignal, sd, mp3, fm, gsm, nullv, basestation, createtime, remark, transmitpower, reflectedpower, workvoltage, rds, fmfrequency,updatetime,lastaccesstime from ter_conditions
     </sql>
 	
     <select id="selectConditionsList" parameterType="Conditions" resultMap="ConditionsResult">
@@ -68,10 +68,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         ORDER BY  RAND() LIMIT 100
     </select>
 
-    <!--<select id="selectConditionsByRandom" parameterType="String" resultMap="ConditionsResult">-->
-        <!--<include refid="selectConditionsVo"/>-->
-
-    <!--</select>-->
         
     <insert id="insertConditions" parameterType="Conditions">
         insert into ter_conditions
@@ -95,7 +91,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="workvoltage != null  ">workvoltage,</if>
 			<if test="rds != null  and rds != ''  ">rds,</if>
 			<if test="fmfrequency != null  and fmfrequency != ''  ">fmfrequency,</if>
-			<if test="updatatime != null  and updatatime != ''  ">updatatime,</if>
+			<if test="updatetime != null  and updatetime != ''  ">updatetime,</if>
 			<if test="lastaccesstime != null  and lastaccesstime != ''  ">lastaccesstime,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -118,7 +114,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="workvoltage != null  ">#{workvoltage},</if>
 			<if test="rds != null  and rds != ''  ">#{rds},</if>
 			<if test="fmfrequency != null  and fmfrequency != ''  ">#{fmfrequency},</if>
-			<if test="updatatime != null  and updatatime != ''  ">#{updatatime},</if>
+			<if test="updatetime != null  and updatetime != ''  ">#{updatetime},</if>
 			<if test="lastaccesstime != null  and lastaccesstime != ''  ">#{lastaccesstime},</if>
          </trim>
     </insert>
@@ -143,7 +139,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="workvoltage != null  ">workvoltage = #{workvoltage},</if>
             <if test="rds != null  and rds != ''  ">rds = #{rds},</if>
             <if test="fmfrequency != null  and fmfrequency != ''  ">fmfrequency = #{fmfrequency},</if>
-            <if test="updatatime != null  and updatatime != ''  ">updatatime = #{updatatime},</if>
+            <if test="updatetime != null  and updatetime != ''  ">updatetime = #{updatetime},</if>
             <if test="lastaccesstime != null  and lastaccesstime != ''  ">lastaccesstime = #{lastaccesstime},</if>
         </trim>
         where tid = #{tid}

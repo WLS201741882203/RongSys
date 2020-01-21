@@ -96,7 +96,7 @@ public class ReadClientInfo extends DefaultCommand {
                     break;
             }
         }
-        conditions.setUpdatatime(new Date());
+        conditions.setupdatetime(new Date());
         return conditions;
     }
 }

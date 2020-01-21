@@ -1,5 +1,6 @@
 package com.ruoyi.broad.mapper;
 
+import com.ruoyi.broad.domain.Organization;
 import com.ruoyi.broad.domain.Termap;
 import com.ruoyi.common.utils.PageData;
 
@@ -19,7 +20,7 @@ public interface TermapMapper
 	 * @param @param pd
 	 * @return List<MapInfo>
 	 */
-	public List<Termap> getAllMapInfo(String aid);
+	public List<Termap> getAllMapInfo(Organization organization);
 
 	public List<Termap> getAllMapInfoForIot();
 }

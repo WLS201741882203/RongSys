@@ -190,15 +190,16 @@ public class ProreApplyController extends BaseController
 	@PostMapping("/reply")
 	@ResponseBody
 	public AjaxResult replyfile(String paid,String replyperson,MultipartFile file,String userid){
+		String path = bConst.UPLOAD_PATH + bConst.MP3_FILE_NAME;
 		SimpleDateFormat sim=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String time=sim.format(new Date());
 
 		ProreApply  proreApply = new ProreApply();
-		String duration = VideoUtil.ReadVideoTimeMs(file);
+		//String duration = VideoUtil.ReadVideoTimeMs(file);
 		String year = DateUtil.getYear();
 
 		String maxfileid = iProgramService.getMaxFileidofYear(year);
-		Program g = bFileUtil.uplodeFile(maxfileid, file, file.getOriginalFilename(),duration, String.valueOf(file.getSize()), year, userid);
+		Program g = bFileUtil.uplodeFile(maxfileid, file, file.getOriginalFilename(),"00:00:00", String.valueOf(file.getSize()), year, userid);
 		g.setPtype(true);
 		g.setCreatedtime(time);
 		g.setIspublic(false);
@@ -209,7 +210,7 @@ public class ProreApplyController extends BaseController
 		proreApply.setPaid(Integer.parseInt(paid));
 		proreApply.setReplyperson(replyperson);
 		proreApply.setReplytime(time);
-		proreApply.setFilename(g.getUrls());
+		proreApply.setFilename(path+"/"+g.getFilename());
 		proreApply.setIsreply(true);
 		return toAjax(proreApplyService.updateProreApply(proreApply));
 	}

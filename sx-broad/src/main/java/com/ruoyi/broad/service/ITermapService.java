@@ -1,4 +1,5 @@
 package com.ruoyi.broad.service;
+import com.ruoyi.broad.domain.Organization;
 import com.ruoyi.broad.domain.Termap;
 import com.ruoyi.common.annotation.DataSource;
 import com.ruoyi.common.enums.DataSourceType;
@@ -18,7 +19,7 @@ public interface ITermapService
 	 * @return List<MapInfo>
 	 */
 	@DataSource(value = DataSourceType.SLAVE)
-	List<Termap> selectMap(String aid);
+	List<Termap> selectMap(Organization organization);
 
 	@DataSource(value = DataSourceType.SLAVE)
 	List<Termap> getAllMapInfoForIot();

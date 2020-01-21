@@ -1,5 +1,6 @@
 package com.ruoyi.broad.service.impl;
 
+import com.ruoyi.broad.domain.Organization;
 import com.ruoyi.broad.domain.Termap;
 import com.ruoyi.broad.mapper.TermapMapper;
 import com.ruoyi.broad.service.ITermapService;
@@ -27,10 +28,10 @@ public class TermapServiceImpl implements ITermapService
 	 */
 	@Override
 	@DataSource(value = DataSourceType.SLAVE)
-	public List<Termap> selectMap(String aid)
+	public List<Termap> selectMap(Organization organization)
 	{
 		List<Termap> menus = new LinkedList<Termap>();
-			menus = termapMapper.getAllMapInfo(aid);
+			menus = termapMapper.getAllMapInfo(organization);
 		return menus;
 	}
 

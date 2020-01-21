@@ -239,7 +239,7 @@
 				// blank or self
 				var _target = $.common.isEmpty(target) ? 'self' : target;
 				if ($.common.isNotEmpty(value)) {
-					return $.common.sprintf("<img class='img-circle img-xs' data-height='%s' data-width='%s' data-target='%s' src='%s'/>", width, height, _target, value);
+					return $.common.sprintf("<img class='img-circle img-xs' height='%s' width='%s' data-targz`et='%s' src='%s'/>", width, height, _target, value);
 				} else {
 					return $.common.nullToStr(value);
 				}

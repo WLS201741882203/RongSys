@@ -28,7 +28,7 @@ public class VideoUtil {
             MultimediaInfo m = encoder.getInfo(excelFile);
             ms = m.getDuration();
             //程序结束时，删除临时文件
-            VideoUtil.deleteFile(excelFile);
+            //VideoUtil.deleteFile(excelFile);
         } catch (Exception e) {
             e.printStackTrace();
         }
